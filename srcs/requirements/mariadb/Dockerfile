@@ -1,26 +1,17 @@
 FROM alpine:3.19
 
-ARG DB_NAME \
-    DB_USER \
-    DB_PASS
+RUN apk --no-cache add mariadb mariadb-client mariadb-server-utils
 
-RUN apk update && apk add --no-cache mariadb mariadb-client
+RUN mkdir -p /run/mysqld && chown mysql:mysql /run/mysqld && \
+	sed -i "s|^skip-networking|#skip-networking|" /etc/my.cnf.d/mariadb-server.cnf &&\
+	sed -i "s|^#bind-address|bind-address|" /etc/my.cnf.d/mariadb-server.cnf
 
-RUN mkdir /var/run/mysqld; \
-    chmod 777 /var/run/mysqld; \
-    { echo '[mysqld]'; \
-      echo 'skip-host-cache'; \
-      echo 'skip-name-resolve'; \
-      echo 'bind-address=0.0.0.0'; \
-    } | tee  /etc/my.cnf.d/docker.cnf; \
-    sed -i "s|skip-networking|skip-networking=0|g" \
-      /etc/my.cnf.d/mariadb-server.cnf
+COPY ./tools/setup.sh /scripts/setup.sh
 
-RUN mysql_install_db --user=mysql --datadir=/var/lib/mysql
+# COPY ./conf/mariadb-server.cnf /etc/my.cnf.d/mariadb-server.cnf
+
+RUN chmod +x /scripts/setup.sh
 
 EXPOSE 3306
 
-COPY requirements/mariadb/conf/create_db.sh .
-RUN sh create_db.sh && rm create_db.sh
-USER mysql
-CMD ["/usr/bin/mysqld", "--skip-log-error"]
+CMD ["/scripts/setup.sh"]
