@@ -14,6 +14,25 @@ services:
       - .env
     volumes:
       - database:/var/lib/mysql
+    networks:
+      - inception_network
+  wordpress:
+    depends_on:
+      - mariadb
+    build:
+      context: ./requirements/wordpress
+      dockerfile: Dockerfile
+    container_name: wordpress
+    image: wordpress
+    restart: always
+    expose:
+      - "9000"
+    env_file:
+      - .env
+    volumes:
+      - wordpress:/var/www/html
+    networks:
+      - inception_network
 
 volumes:
   database:
@@ -23,3 +42,15 @@ volumes:
       type: none
       device: ${HOME}/data/mariadb
       o: bind
+  wordpress:
+    name: wordpress
+    driver: local
+    driver_opts:
+      type: none
+      device: ${HOME}/data/wordpress
+      o: bind
+
+networks:
+  inception_network:
+    name: inception_network
+    driver: bridge

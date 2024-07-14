@@ -14,4 +14,4 @@ RUN chmod +x /scripts/setup.sh
 
 EXPOSE 3306
 
-CMD ["/scripts/setup.sh"]
+CMD [ "/scripts/setup.sh" ]
