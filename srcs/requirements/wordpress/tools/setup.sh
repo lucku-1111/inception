@@ -9,20 +9,20 @@ else
 	echo "PHP-FPM is already configured."
 fi
 
-# for i in $(seq 60); do
-# 	if ! mysqladmin -u $MYSQL_USER -p$MYSQL_USER_PASSWORD -h $MYSQL_HOST ping 2> /dev/null; then
-# 		echo "Waiting for MySQL/MariaDB server to be ready... ($i sec)"
-# 		sleep 1
-# 	else
-# 		break
-# 	fi
-# done
+for i in $(seq 60); do
+	if ! mysqladmin -u $MYSQL_USER -p$MYSQL_USER_PASSWORD -h $MYSQL_HOST ping 2> /dev/null; then
+		echo "Waiting for MySQL/MariaDB server to be ready... ($i sec)"
+		sleep 1
+	else
+		break
+	fi
+done
 
 # Check if WordPress is already installed
-if ! wp core is-installed --path=/var/www/html/wordpress; then
+if [ ! -f "/var/www/html/wordpress/wp-config.php" ]; then
 	# Create wp-config.php
-	wp config create --dbname=$MYSQL_DATABASE --dbuser=$MYSQL_USER --dbpass=$MYSQL_USER_PASSWORD --dbhost=$MYSQL_HOST --extra-php <<PHP
-	define( 'WP_CACHE', false );
+	wp config create --dbname=$MYSQL_DATABASE --dbuser=$MYSQL_USER --dbpass=$MYSQL_USER_PASSWORD --dbhost=$MYSQL_HOST --allow-root --path=/var/www/html/wordpress <<PHP
+	define( 'WP_CACHE', true );
 PHP
 	# Install WordPress
 	wp core install --url=$WP_URL --title="$WP_TITLE" --admin_user=$WP_ADMIN --admin_password=$WP_ADMIN_PASSWORD --admin_email=$WP_ADMIN_EMAIL --path=/var/www/html/wordpress
@@ -35,4 +35,4 @@ fi
 
 # Start PHP-FPM
 echo "Starting PHP-FPM..."
-php-fpm8.1 -F
+php-fpm81 -F
