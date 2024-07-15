@@ -43,4 +43,4 @@ fi
 
 # Start MariaDB in the foreground
 echo "Starting MariaDB..."
-exec /usr/bin/mysqld --user=mysql --console # --skip-networking=0 --bind-address=0.0.0.0
+exec /usr/bin/mysqld --user=mysql --console

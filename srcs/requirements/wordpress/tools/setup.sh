@@ -18,6 +18,8 @@ for i in $(seq 60); do
 	fi
 done
 
+sleep 10
+
 # Check if WordPress is already installed
 if [ ! -f "/var/www/html/wordpress/wp-config.php" ]; then
 	# Create wp-config.php

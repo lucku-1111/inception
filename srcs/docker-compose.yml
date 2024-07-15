@@ -33,6 +33,21 @@ services:
       - wordpress:/var/www/html/wordpress
     networks:
       - inception_network
+  nginx:
+    depends_on:
+      - wordpress
+    build:
+      context: ./requirements/nginx
+      dockerfile: Dockerfile
+    container_name: nginx
+    image: nginx
+    restart: always
+    ports:
+      - "443:443"
+    volumes:
+      - wordpress:/var/www/html/wordpress
+    networks:
+      - inception_network
 
 volumes:
   database:

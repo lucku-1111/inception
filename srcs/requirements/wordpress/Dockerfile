@@ -24,7 +24,8 @@ RUN apk update && apk add --no-cache \
 COPY ./tools/setup.sh /scripts/setup.sh
 
 RUN ln -s /usr/bin/php81 /usr/bin/php && \
-	curl -o /usr/local/bin/wp https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
+	curl -o /usr/local/bin/wp-cli.phar https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
+	ln -s /usr/local/bin/wp-cli.phar /usr/local/bin/wp && \
 	chmod +x /usr/local/bin/wp && mkdir -p /var/www/html/wordpress && \
 	wp core download --allow-root --path=/var/www/html/wordpress && \
 	adduser -S nginx && addgroup -S nginx && \
