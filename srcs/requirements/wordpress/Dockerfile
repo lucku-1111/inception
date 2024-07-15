@@ -1,6 +1,5 @@
 FROM alpine:3.19
 
-# 필수 시스템 패키지 설치
 RUN apk update && apk add --no-cache \
 	mariadb-client \
 	bash \
@@ -28,7 +27,7 @@ RUN ln -s /usr/bin/php81 /usr/bin/php && \
 	ln -s /usr/local/bin/wp-cli.phar /usr/local/bin/wp && \
 	chmod +x /usr/local/bin/wp && mkdir -p /var/www/html/wordpress && \
 	wp core download --allow-root --path=/var/www/html/wordpress && \
-	adduser -S nginx && addgroup -S nginx && \
+	adduser -S seoklee && addgroup -S seoklee && \
 	chmod +x /scripts/setup.sh
 
 CMD [ "/scripts/setup.sh" ]

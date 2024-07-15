@@ -21,7 +21,7 @@ re:
 
 clean: down
 	@docker image prune -f > /dev/null 2>&1 && echo " $(check_mark) Removed dangling images" || (echo "$(red_x) Failed to remove dangling images")
-	@docker rmi -f mariadb wordpress nginx > /dev/null 2>&1 && echo " $(check_mark) Removed images" || (echo "$(red_x) Failed to remove images")
+	@docker rmi -f mariadb wordpress nginx alpine:3.19 > /dev/null 2>&1 && echo " $(check_mark) Removed images" || (echo "$(red_x) Failed to remove images")
 	@docker volume rm database wordpress > /dev/null 2>&1 && echo " $(check_mark) Removed volumes" || (echo "$(red_x) Failed to remove volumes")
 	@sudo rm -rf ${HOME}/data && echo " $(check_mark) Removed local data" || (echo "$(red_x) Failed to remove local data")
 

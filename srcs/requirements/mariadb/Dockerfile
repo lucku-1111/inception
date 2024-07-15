@@ -8,8 +8,6 @@ RUN mkdir -p /run/mysqld && chown mysql:mysql /run/mysqld && \
 
 COPY ./tools/setup.sh /scripts/setup.sh
 
-# COPY ./conf/mariadb-server.cnf /etc/my.cnf.d/mariadb-server.cnf
-
 RUN chmod +x /scripts/setup.sh
 
 EXPOSE 3306

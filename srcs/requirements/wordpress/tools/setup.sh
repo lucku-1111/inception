@@ -2,8 +2,8 @@
 
 if cat /etc/php81/php-fpm.d/www.conf | grep -q "user = nobody"; then
 	echo "Configuring PHP-FPM..."
-	sed -i 's/.*user = nobody.*/user = nginx/' /etc/php81/php-fpm.d/www.conf
-	sed -i 's/.*group = nobody.*/group = nginx/' /etc/php81/php-fpm.d/www.conf
+	sed -i 's/.*user = nobody.*/user = seoklee/' /etc/php81/php-fpm.d/www.conf
+	sed -i 's/.*group = nobody.*/group = seoklee/' /etc/php81/php-fpm.d/www.conf
 	sed -i 's/.*listen = 127.0.0.1.*/listen = 9000/g' /etc/php81/php-fpm.d/www.conf
 else
 	echo "PHP-FPM is already configured."
@@ -36,5 +36,5 @@ else
 fi
 
 # Start PHP-FPM
-echo "Starting PHP-FPM..."
+echo "Starting Wordpress"
 php-fpm81 -F

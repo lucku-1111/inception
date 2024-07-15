@@ -1,10 +1,5 @@
 #!/bin/sh
 
-# echo "root pw:  ${MYSQL_ROOT_PASSWORD}"
-# echo "user:     ${MYSQL_USER}"
-# echo "user pw:  ${MYSQL_USER_PASSWORD}"
-# echo "database: ${MYSQL_DATABASE}"
-
 if [ ! -f .setup_complete ]; then
 	# Start MariaDB to initialize the database
 	/usr/bin/mysql_install_db --user=mysql --datadir=/var/lib/mysql > /dev/null 2>&1
@@ -43,4 +38,4 @@ fi
 
 # Start MariaDB in the foreground
 echo "Starting MariaDB..."
-exec /usr/bin/mysqld --user=mysql --console
+exec /usr/bin/mysqld --user=mysql
