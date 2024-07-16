@@ -12,4 +12,6 @@ COPY ./tools/setup.sh /scripts/setup.sh
 
 RUN chmod +x /scripts/setup.sh
 
+ENTRYPOINT [ "/usr/bin/dumb-init", "--" ]
+
 CMD [ "/scripts/setup.sh" ]

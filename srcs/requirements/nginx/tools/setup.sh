@@ -1,5 +1,5 @@
 #!/bin/sh
 
-sleep 20 && \
+sleep 30 && \
 echo "Starting Nginx..." && \
 nginx -g "daemon off;"

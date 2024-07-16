@@ -1,6 +1,7 @@
 FROM alpine:3.19
 
 RUN apk update && apk add --no-cache \
+	dumb-init \
 	mariadb-client \
 	bash \
 	curl \
@@ -27,7 +28,9 @@ RUN ln -s /usr/bin/php81 /usr/bin/php && \
 	ln -s /usr/local/bin/wp-cli.phar /usr/local/bin/wp && \
 	chmod +x /usr/local/bin/wp && mkdir -p /var/www/html/wordpress && \
 	wp core download --allow-root --path=/var/www/html/wordpress && \
-	adduser -S seoklee && addgroup -S seoklee && \
+	adduser -S nginx && addgroup -S nginx && \
 	chmod +x /scripts/setup.sh
+
+ENTRYPOINT [ "/usr/bin/dumb-init", "--" ]
 
 CMD [ "/scripts/setup.sh" ]
